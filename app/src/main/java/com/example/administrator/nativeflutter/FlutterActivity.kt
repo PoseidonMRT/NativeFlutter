@@ -9,8 +9,15 @@ class FlutterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val flutterView = Flutter.createView(this@FlutterActivity,lifecycle,"welcome")
-        val layout = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-        addContentView(flutterView,layout)
+        val flutterView = Flutter.createView(
+            this@FlutterActivity,
+            lifecycle,
+            "welcome"
+        )
+        val layout = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        )
+        addContentView(flutterView, layout)
     }
 }

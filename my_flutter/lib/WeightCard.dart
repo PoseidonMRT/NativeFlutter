@@ -32,7 +32,7 @@ class _WeightCardState extends State<WeightCard> {
               Padding(
                 padding: EdgeInsets.only(top: screenAwareSize(4.0, context)),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     CardTitle("Weight"),
                     SubCardTitle("(kg)"),
