@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter/CardTitle.dart';
-import 'SubCardTitle.dart';
+import 'package:flutter_svg/svg.dart';
 import 'widget_utils.dart' show screenAwareSize;
-
-double _ovalWidth(BuildContext context) {
-  return screenAwareSize(100.0, context);
-}
-
-double _ovalHeight(BuildContext context) {
-  return screenAwareSize(80.0, context);
-}
 
 class WeightCard extends StatefulWidget {
   @override
@@ -35,7 +27,7 @@ class _WeightCardState extends State<WeightCard> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: screenAwareSize(4.0, context)),
-                child: _drawMainStack(context),
+                child: _drawWeightSlider(context),
               ),
             ],
           ),
@@ -44,35 +36,36 @@ class _WeightCardState extends State<WeightCard> {
     );
   }
 
-  Widget _drawMainStack(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: <Widget>[
-        _drawCircleIndicator(context),
-      ],
-    );
-  }
-
-  Widget _drawCircleIndicator(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        WeightOval(),
-      ],
-    );
+  Widget _drawWeightSlider(BuildContext context) {
+    return WeightBackground();
   }
 }
 
-class WeightOval extends StatelessWidget {
+class WeightBackground extends StatelessWidget {
+
+  final Widget child;
+
+  const WeightBackground({Key key,this.child}):super(key:key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: _ovalWidth(context),
-      height: _ovalHeight(context),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Color.fromRGBO(244, 244, 244, 1.0),
-      ),
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: <Widget>[
+        Container(
+          height: screenAwareSize(100.0, context),
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(244, 244, 244, 1.0),
+            borderRadius: new BorderRadius.circular(screenAwareSize(50.0, context)),
+          ),
+          child: child,
+        ),
+        SvgPicture.asset(
+          "images/weight_arrow.svg",
+          height: screenAwareSize(10.0, context),
+          width: screenAwareSize(18.0, context),
+        )
+      ],
     );
   }
 }
