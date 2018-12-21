@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter/widget_utils.dart' show screenAwareSize;
 import 'GenderCard.dart';
 import 'WeightCard.dart';
+import 'package:my_flutter/HeightCard.dart';
 
 class InputPage extends StatelessWidget {
   @override
@@ -47,21 +48,11 @@ class InputPage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: _tempCard("Height"),
+            child: HeightCard(),
           )
         ],
       ),
 
-    );
-  }
-
-  Widget _tempCard(String label) {
-    return Card(
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Text(label),
-      ),
     );
   }
 }
