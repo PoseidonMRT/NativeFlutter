@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter/CardTitle.dart';
+import 'HeightPicker.dart';
 import 'widget_utils.dart' show screenAwareSize;
 
 class HeightCard extends StatefulWidget {
@@ -32,8 +33,21 @@ class _HeightCardState extends State<HeightCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            CardTitle("Height",subTitle: "(cm)",)
-
+            CardTitle("Height",subTitle: "(cm)",),
+            Expanded(
+                child: Padding(
+                    padding: EdgeInsets.only(bottom: screenAwareSize(8.0, context)),
+                  child: LayoutBuilder(
+                      builder: (context,constraints){
+                        return HeightPicker(
+                          widgetHeight: constraints.maxHeight,
+                          height: height,
+                          onChange: (val) => setState(() => height = val),
+                        );
+                      }
+                  ),
+                )
+            )
           ],
         ),
       ),

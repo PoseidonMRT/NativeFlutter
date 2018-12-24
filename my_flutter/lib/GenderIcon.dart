@@ -6,7 +6,7 @@ import 'Gender.dart';
 import 'GenderLine.dart';
 
 double _circleSize(BuildContext context){
-  return screenAwareSize(100.0, context);
+  return screenAwareSize(80.0, context);
 }
 
 const double _defaultIconAngel = math.pi / 4;
