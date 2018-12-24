@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'HeightSlider.dart';
 import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
 
 const TextStyle labelsTextStyle = const TextStyle(
@@ -50,12 +51,40 @@ class HeightPicker extends StatefulWidget {
 }
 
 class _HeightPickerState extends State<HeightPicker> {
+
+  double get _drawingHeight{
+    double totalHeight = widget.widgetHeight;
+    double marginBottom = marginBottomAdapted(context);
+    double marginTop = marginTopAdapted(context);
+    return totalHeight - (marginBottom + marginTop + labelsFontSize);
+  }
+
+  double get _pixelsPerUnit {
+    return _drawingHeight / widget.totalUnits;
+  }
+
+  double get _sliderPosition{
+    double halfOfBottomLabel = labelsFontSize / 2;
+    int unitsFromBottom = widget.height - widget.minHeight;
+    return halfOfBottomLabel + unitsFromBottom * _pixelsPerUnit;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+        _drawSlider(),
         _drawLabels(),
       ],
+    );
+  }
+
+  Widget _drawSlider(){
+    return Positioned(
+        child: HeightSlider(height: widget.height,),
+      left: 0.0,
+        right: 0.0,
+        bottom: _sliderPosition,
     );
   }
 
