@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'widget_utils.dart' show screenAwareSize;
+import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
 import 'Gender.dart';
-import 'GenderLine.dart';
+import 'package:my_flutter/inputpage/gender/GenderLine.dart';
 
 double _circleSize(BuildContext context){
   return screenAwareSize(80.0, context);

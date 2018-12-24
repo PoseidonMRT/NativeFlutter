@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:math' as math;
-import 'widget_utils.dart' show screenAwareSize;
+import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
 
 const double _defaultIconAngel = math.pi / 4;
 

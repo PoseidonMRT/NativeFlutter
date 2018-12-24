@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'widget_utils.dart' show screenAwareSize;
+import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
 
 const TextStyle labelsTextStyle = const TextStyle(
   color: labelsGrey,

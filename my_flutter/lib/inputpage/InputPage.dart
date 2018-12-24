@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter/widget_utils.dart' show screenAwareSize;
-import 'GenderCard.dart';
-import 'WeightCard.dart';
-import 'package:my_flutter/HeightCard.dart';
+import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
+import 'package:my_flutter/inputpage/gender/GenderCard.dart';
+import 'package:my_flutter/inputpage/weight/WeightCard.dart';
+import 'package:my_flutter/inputpage/height/HeightCard.dart';
 
 class InputPage extends StatelessWidget {
   @override

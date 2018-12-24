@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter/CardTitle.dart';
+import 'package:my_flutter/widget/CardTitle.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:my_flutter/WeightSlider.dart';
-import 'widget_utils.dart' show screenAwareSize;
+import 'package:my_flutter/inputpage/weight/WeightSlider.dart';
+import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
 
 class WeightCard extends StatefulWidget {
   final int initialWeight;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'widget_utils.dart' show screenAwareSize;
-import 'package:my_flutter/CardTitle.dart';
+import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
+import 'package:my_flutter/widget/CardTitle.dart';
 import 'Gender.dart';
-import 'GenderIcon.dart';
-import 'GenderArrow.dart';
+import 'package:my_flutter/inputpage/gender/GenderIcon.dart';
+import 'package:my_flutter/inputpage/gender/GenderArrow.dart';
 import 'dart:math' as math;
 
 double _circleSize(BuildContext context) {
