@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'HeightSlider.dart';
+import 'package:flutter_svg/svg.dart';
+import 'dart:math' as math;
 import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
 
 const TextStyle labelsTextStyle = const TextStyle(
@@ -52,7 +54,11 @@ class HeightPicker extends StatefulWidget {
 
 class _HeightPickerState extends State<HeightPicker> {
 
-  double get _drawingHeight{
+  double startDragYOffset;
+
+  int startDragHeight;
+
+  double get _drawingHeight {
     double totalHeight = widget.widgetHeight;
     double marginBottom = marginBottomAdapted(context);
     double marginTop = marginTopAdapted(context);
@@ -63,7 +69,7 @@ class _HeightPickerState extends State<HeightPicker> {
     return _drawingHeight / widget.totalUnits;
   }
 
-  double get _sliderPosition{
+  double get _sliderPosition {
     double halfOfBottomLabel = labelsFontSize / 2;
     int unitsFromBottom = widget.height - widget.minHeight;
     return halfOfBottomLabel + unitsFromBottom * _pixelsPerUnit;
@@ -71,20 +77,78 @@ class _HeightPickerState extends State<HeightPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        _drawSlider(),
-        _drawLabels(),
-      ],
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTapDown: _onTapDown,
+      onVerticalDragStart: _onVerticalDragStart,
+      onVerticalDragUpdate: _onVerticalDragUpdate,
+      child: Stack(
+        children: <Widget>[
+          _drawSlider(),
+          _drawLabels(),
+          _drawPersonImage(),
+        ],
+      ),
     );
   }
 
-  Widget _drawSlider(){
+  _onVerticalDragStart(DragStartDetails details){
+    int newHeight = _globalOffsetToHeight(details.globalPosition);
+    widget.onChange(newHeight);
+    setState(() {
+      startDragYOffset = details.globalPosition.dy;
+      startDragHeight = newHeight;
+    });
+  }
+
+  _onVerticalDragUpdate(DragUpdateDetails details){
+    double currentYOffset = details.globalPosition.dy;
+    double verticalDifference = startDragYOffset - currentYOffset;
+    int diffHeight = verticalDifference ~/ _pixelsPerUnit;
+    int height = _normalizedHeight(startDragHeight+diffHeight);
+    setState(() {
+      widget.onChange(height);
+    });
+  }
+
+  _onTapDown(TapDownDetails details){
+    int height = _globalOffsetToHeight(details.globalPosition);
+    widget.onChange(_normalizedHeight(height));
+  }
+
+  int _normalizedHeight(int height){
+    return math.max(widget.minHeight, math.min(widget.maxHeight, height));
+  }
+
+  int _globalOffsetToHeight(Offset globalOffset){
+    RenderBox renderBox = context.findRenderObject();
+    Offset localPosition = renderBox.globalToLocal(globalOffset);
+    double dy = localPosition.dy;
+    dy = dy - marginTopAdapted(context) - labelsFontSize / 2;
+    int height = widget.maxHeight - (dy ~/ _pixelsPerUnit);
+    return height;
+  }
+
+  Widget _drawPersonImage() {
+    double personImageHeight = _sliderPosition + marginBottomAdapted(context);
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SvgPicture.asset(
+        "images/person.svg",
+        height: personImageHeight,
+        width: personImageHeight / 3,
+      ),
+    );
+  }
+
+  Widget _drawSlider() {
     return Positioned(
-        child: HeightSlider(height: widget.height,),
+      child: HeightSlider(
+        height: widget.height,
+      ),
       left: 0.0,
-        right: 0.0,
-        bottom: _sliderPosition,
+      right: 0.0,
+      bottom: _sliderPosition,
     );
   }
 
