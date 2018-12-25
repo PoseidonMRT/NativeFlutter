@@ -6,8 +6,9 @@ import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
 class HeightCard extends StatefulWidget {
 
   final int height;
+  final ValueChanged<int> onChanged;
 
-  const HeightCard({Key key,this.height}):super(key:key);
+  const HeightCard({Key key,this.height,this.onChanged}):super(key:key);
 
   @override
   _HeightCardState createState() {
@@ -42,7 +43,7 @@ class _HeightCardState extends State<HeightCard> {
                         return HeightPicker(
                           widgetHeight: constraints.maxHeight,
                           height: height,
-                          onChange: (val) => setState(() => height = val),
+                          onChange: _onChanged,
                         );
                       }
                   ),
@@ -52,5 +53,10 @@ class _HeightCardState extends State<HeightCard> {
         ),
       ),
     );
+  }
+
+  _onChanged(int val){
+    height = val;
+    widget.onChanged(val);
   }
 }

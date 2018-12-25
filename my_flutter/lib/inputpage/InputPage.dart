@@ -5,8 +5,20 @@ import 'package:my_flutter/inputpage/gender/GenderCard.dart';
 import 'package:my_flutter/inputpage/weight/WeightCard.dart';
 import 'package:my_flutter/inputpage/height/HeightCard.dart';
 import 'package:my_flutter/appbar/BmiAppBar.dart';
+import 'package:my_flutter/inputpage/gender/Gender.dart';
+import 'package:my_flutter/inputpage/inputsummary/InputSummaryCard.dart';
 
-class InputPage extends StatelessWidget {
+class InputPage extends StatefulWidget {
+  @override
+  State createState() {
+    return new InputPageState();
+  }
+}
+
+class InputPageState extends State<InputPage> {
+  Gender gender = Gender.other;
+  int height = 170;
+  int weight = 70;
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +26,17 @@ class InputPage extends StatelessWidget {
       appBar: PreferredSize(
           child: BmiAppBar(),
           preferredSize: Size.fromHeight(appBarHeight(context))),
-      body: Padding(
-        padding: MediaQuery.of(context).padding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(child: _buildCards(context)),
-            _buildBottom(context),
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          InputSummaryCard(
+            gender: gender,
+            weight: weight,
+            height: height,
+          ),
+          Expanded(child: _buildCards(context)),
+          _buildBottom(context),
+        ],
       ),
     );
   }
@@ -37,27 +51,31 @@ class InputPage extends StatelessWidget {
   }
 
   Widget _buildCards(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 14.0,
-        right: 14.0,
-        top: screenAwareSize(32.0, context),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              children: <Widget>[
-                Expanded(child: GenderCard()),
-                Expanded(child: WeightCard()),
-              ],
-            ),
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                  child: GenderCard(
+                initialGender: gender,
+                onChanged: (val) => setState(() => gender = val),
+              )),
+              Expanded(
+                  child: WeightCard(
+                initialWeight: weight,
+                onChanged: (val) => setState(() => weight = val),
+              )),
+            ],
           ),
-          Expanded(
-            child: HeightCard(),
-          )
-        ],
-      ),
+        ),
+        Expanded(
+          child: HeightCard(
+            height: height,
+            onChanged: (val) => setState(() => height = val),
+          ),
+        )
+      ],
     );
   }
 }

@@ -6,8 +6,9 @@ import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
 
 class WeightCard extends StatefulWidget {
   final int initialWeight;
+  final ValueChanged<int> onChanged;
 
-  const WeightCard({Key key, this.initialWeight}) : super(key: key);
+  const WeightCard({Key key, this.initialWeight,this.onChanged}) : super(key: key);
 
   @override
   _WeightCardState createState() {
@@ -58,11 +59,16 @@ class _WeightCardState extends State<WeightCard> {
                 minValue: 30,
                 maxValue: 110,
                 value: weight,
-                onChanged: (val) => setState(() => weight = val),
+                onChanged: _onChanged,
                 width: constraints.maxWidth,
               );
       }),
     );
+  }
+
+  _onChanged(int val){
+    weight = val;
+    widget.onChanged(val);
   }
 }
 
