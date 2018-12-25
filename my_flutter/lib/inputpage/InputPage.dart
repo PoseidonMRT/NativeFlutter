@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter/utils/widget_utils.dart' show screenAwareSize;
+import 'package:my_flutter/utils/widget_utils.dart' show appBarHeight;
 import 'package:my_flutter/inputpage/gender/GenderCard.dart';
 import 'package:my_flutter/inputpage/weight/WeightCard.dart';
 import 'package:my_flutter/inputpage/height/HeightCard.dart';
+import 'package:my_flutter/appbar/BmiAppBar.dart';
 
 class InputPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+          child: BmiAppBar(),
+          preferredSize: Size.fromHeight(appBarHeight(context))),
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Column(
@@ -52,7 +58,6 @@ class InputPage extends StatelessWidget {
           )
         ],
       ),
-
     );
   }
 }
