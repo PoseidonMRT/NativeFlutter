@@ -42,11 +42,17 @@ class InputPageState extends State<InputPage> {
   }
 
   Widget _buildBottom(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      height: screenAwareSize(108.0, context),
-      width: double.infinity,
-      child: Switch(value: true, onChanged: (val) {}),
+    return Padding(
+      padding: EdgeInsets.only(
+        left: screenAwareSize(16.0, context),
+        right: screenAwareSize(16.0, context),
+        bottom: screenAwareSize(22.0, context),
+        top: screenAwareSize(14.0, context),
+      ),
+      child: Placeholder(
+        fallbackHeight: screenAwareSize(52.0, context),
+        color: Theme.of(context).primaryColor,
+      ),
     );
   }
 
