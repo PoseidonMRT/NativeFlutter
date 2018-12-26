@@ -30,7 +30,7 @@ class _HeightCardState extends State<HeightCard> {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-          padding: EdgeInsets.only(top: screenAwareSize(16.0, context)),
+          padding: EdgeInsets.only(top: screenAwareSize(8.0, context)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -56,6 +56,7 @@ class _HeightCardState extends State<HeightCard> {
   }
 
   _onChanged(int val){
+    //更新HeightCard自身状态变化的同时把状态同步到父控件
     height = val;
     widget.onChanged(val);
   }
