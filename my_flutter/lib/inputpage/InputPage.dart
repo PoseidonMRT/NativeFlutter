@@ -7,6 +7,7 @@ import 'package:my_flutter/inputpage/height/HeightCard.dart';
 import 'package:my_flutter/appbar/BmiAppBar.dart';
 import 'package:my_flutter/inputpage/gender/Gender.dart';
 import 'package:my_flutter/inputpage/inputsummary/InputSummaryCard.dart';
+import 'package:my_flutter/bottombar/PacmanSlider.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -49,9 +50,9 @@ class InputPageState extends State<InputPage> {
         bottom: screenAwareSize(22.0, context),
         top: screenAwareSize(14.0, context),
       ),
-      child: Placeholder(
-        fallbackHeight: screenAwareSize(52.0, context),
-        color: Theme.of(context).primaryColor,
+      child: Container(
+        height: screenAwareSize(52.0, context),
+        child: PacmanSlider(),
       ),
     );
   }
