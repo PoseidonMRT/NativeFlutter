@@ -8,6 +8,9 @@ import 'package:my_flutter/appbar/BmiAppBar.dart';
 import 'package:my_flutter/inputpage/gender/Gender.dart';
 import 'package:my_flutter/inputpage/inputsummary/InputSummaryCard.dart';
 import 'package:my_flutter/bottombar/PacmanSlider.dart';
+import 'package:my_flutter/bottombar/TransitionDot.dart';
+import 'package:my_flutter/resultpage/ResultPage.dart';
+import 'package:my_flutter/FadeRote.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -16,29 +19,48 @@ class InputPage extends StatefulWidget {
   }
 }
 
-class InputPageState extends State<InputPage> {
+class InputPageState extends State<InputPage> with TickerProviderStateMixin{
   Gender gender = Gender.other;
   int height = 170;
   int weight = 70;
 
+  AnimationController submitAnimationController;
+
+
+  @override
+  void initState() {
+    super.initState();
+    submitAnimationController = AnimationController(vsync: this,duration: Duration(seconds: 2));
+    submitAnimationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _goToResultPage().then((_) => submitAnimationController.reset());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-          child: BmiAppBar(),
-          preferredSize: Size.fromHeight(appBarHeight(context))),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          InputSummaryCard(
-            gender: gender,
-            weight: weight,
-            height: height,
+    return Stack(
+      children: <Widget>[
+        Scaffold(
+          appBar: PreferredSize(
+              child: BmiAppBar(),
+              preferredSize: Size.fromHeight(appBarHeight(context))),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              InputSummaryCard(
+                gender: gender,
+                weight: weight,
+                height: height,
+              ),
+              Expanded(child: _buildCards(context)),
+              _buildBottom(context),
+            ],
           ),
-          Expanded(child: _buildCards(context)),
-          _buildBottom(context),
-        ],
-      ),
+        ),
+        TransitionDot(animation:submitAnimationController),
+      ],
     );
   }
 
@@ -52,7 +74,10 @@ class InputPageState extends State<InputPage> {
       ),
       child: Container(
         height: screenAwareSize(52.0, context),
-        child: PacmanSlider(),
+        child: PacmanSlider(
+          onSubmit: onPacmanSubmit,
+          submitAnimationController: submitAnimationController,
+        ),
       ),
     );
   }
@@ -84,5 +109,25 @@ class InputPageState extends State<InputPage> {
         )
       ],
     );
+  }
+
+  void onPacmanSubmit() {
+    submitAnimationController.forward();
+  }
+
+  _goToResultPage() async {
+    return Navigator.of(context).push(FadeRoute(
+      builder: (context) => ResultPage(
+        weight: weight,
+        height: height,
+        gender: gender,
+      ),
+    ));
+  }
+
+  @override
+  void dispose() {
+    submitAnimationController.dispose();
+    super.dispose();
   }
 }

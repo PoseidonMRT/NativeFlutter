@@ -46,6 +46,7 @@ flutter:
    - images/weight_arrow.svg
    - images/person.svg
    - images/pacman.svg
+   - images/user.svg
 
   # To add Flutter specific assets to your application, add an assets section, 
   # like this:
